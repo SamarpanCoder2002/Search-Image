@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:searchphoto/config/color_collection.dart';
 import 'package:searchphoto/config/text_style_collection.dart';
+import 'package:searchphoto/providers/main_provider.dart';
 import 'package:searchphoto/screens/components/image_container.dart';
 import 'package:searchphoto/screens/components/search_section.dart';
 import 'package:searchphoto/services/device_specific_operation.dart';
@@ -16,10 +18,14 @@ class _BaseScreenState extends State<BaseScreen> {
 
   @override
   void initState() {
-    changeOnlyStatusBarColor();
-    changeOnlyNavigationBarColor();
-    makeStatusBarTransparent(darkIcons: true);
+    changeSystemNavigationAndStatusBarColor();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    Provider.of<MainProvider>(context, listen: false).dispose();
+    super.dispose();
   }
 
   @override
@@ -29,7 +35,7 @@ class _BaseScreenState extends State<BaseScreen> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
         child: _actualBody(),
       ),
     );

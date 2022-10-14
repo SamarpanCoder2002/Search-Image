@@ -1,8 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart' as scheduler;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 import 'package:searchphoto/config/color_collection.dart';
+import 'package:searchphoto/config/text_style_collection.dart';
+import 'package:searchphoto/providers/main_provider.dart';
+import 'package:searchphoto/screens/show_image.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../../services/device_specific_operation.dart';
 
 class ImageContainerSection extends StatefulWidget {
   const ImageContainerSection({Key? key}) : super(key: key);
@@ -12,59 +19,84 @@ class ImageContainerSection extends StatefulWidget {
 }
 
 class _ImageContainerSectionState extends State<ImageContainerSection> {
-  final _sampleImagesCollection = [
-    "https://images.pexels.com/photos/1024960/pexels-photo-1024960.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/258421/pexels-photo-258421.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/369433/pexels-photo-369433.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/773124/pexels-photo-773124.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/984944/pexels-photo-984944.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/3693901/pexels-photo-3693901.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/1187079/pexels-photo-1187079.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/1024960/pexels-photo-1024960.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/258421/pexels-photo-258421.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/369433/pexels-photo-369433.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/773124/pexels-photo-773124.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/984944/pexels-photo-984944.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/3693901/pexels-photo-3693901.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/1187079/pexels-photo-1187079.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/1024960/pexels-photo-1024960.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/258421/pexels-photo-258421.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/369433/pexels-photo-369433.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/773124/pexels-photo-773124.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/984944/pexels-photo-984944.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/3693901/pexels-photo-3693901.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/1187079/pexels-photo-1187079.jpeg?auto=compress&cs=tinysrgb&w=600",
-  ];
+  @override
+  void initState() {
+    changeSystemNavigationAndStatusBarColor();
+    Provider.of<MainProvider>(context, listen: false).scrollInitialize();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final _mainProvider = Provider.of<MainProvider>(context);
+
     return Expanded(
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: _searchResult(), // Shimmer: _loadingView
+        height: MediaQuery.of(context).size.height,
+        child: _mainProvider.isShimmerLoading
+            ? _loadingView()
+            : _searchResult(), // Shimmer: _loadingView
       ),
     );
   }
 
   _searchResult() {
-    return MasonryGridView.count(
-      physics: const BouncingScrollPhysics(),
-      crossAxisCount: 2,
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 2,
-      itemCount: _sampleImagesCollection.length,
-      itemBuilder: (context, index) {
-        return Container(
-            constraints: BoxConstraints(
-              maxWidth: (MediaQuery.of(context).size.width / 2) - 10,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.pureBlackColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child:
-                CachedNetworkImage(imageUrl: _sampleImagesCollection[index]));
+    final _imagesCollection =
+        Provider.of<MainProvider>(context).imagesCollection;
+
+    if (_imagesCollection.isEmpty) {
+      return Center(
+        child: Text(
+          'No Images Found',
+          style: TextStyleCollection.headingTextStyle.copyWith(fontSize: 25),
+        ),
+      );
+    }
+
+    return SizedBox(
+      child: MasonryGridView.count(
+        controller: Provider.of<MainProvider>(context).scrollController,
+        physics: const BouncingScrollPhysics(),
+        crossAxisCount: 2,
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 2,
+        itemCount: _imagesCollection.length,
+        itemBuilder: (context, index) => _imageElement(index),
+      ),
+    );
+  }
+
+  _imageElement(int index) {
+    final _imagesCollection =
+        Provider.of<MainProvider>(context).imagesCollection;
+
+    return InkWell(
+      onTap: () {
+        scheduler.timeDilation = 4;
+
+        Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => ShowImageScreen(
+                        imageUrl: _imagesCollection[index]['src']['large'] ??
+                            _imagesCollection[index]['src']['original'])))
+            .then((value) {
+          hideKeyboard();
+          scheduler.timeDilation = 1;
+        });
       },
+      child: Container(
+          constraints: BoxConstraints(
+            maxWidth: (MediaQuery.of(context).size.width / 2) - 10,
+          ),
+          decoration: BoxDecoration(
+            color: AppColors.pureBlackColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: CachedNetworkImage(
+              imageUrl: _imagesCollection[index]['src']['large'] ??
+                  _imagesCollection[index]['src']['original'])),
     );
   }
 

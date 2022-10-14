@@ -10,7 +10,7 @@ void showStatusAndNavigationBar() =>
 void changeSystemNavigationAndStatusBarColor(
         {Color navigationBarColor = AppColors.pureWhiteColor,
         Color statusBarColor = AppColors.transparentColor,
-        Brightness? statusIconBrightness = Brightness.light,
+        Brightness? statusIconBrightness = Brightness.dark,
         Brightness? navigationIconBrightness = Brightness.dark}) =>
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: navigationBarColor, // navigation bar color
@@ -27,9 +27,10 @@ void hideStatusAndNavigationBar() =>
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 
 void changeOnlyStatusBarColor(
-        {Color statusBarColor = AppColors.transparentColor}) =>
+        {Color statusBarColor = AppColors.transparentColor, Brightness statusBarIconBrightness = Brightness.dark}) =>
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: statusBarColor, // status bar color
+      statusBarColor: statusBarColor,
+      statusBarIconBrightness: statusBarIconBrightness
     ));
 
 void changeOnlyNavigationBarColor(
