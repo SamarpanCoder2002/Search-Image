@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:searchphoto/providers/main_provider.dart';
-import 'package:searchphoto/screens/base_screen.dart';
+import 'package:search_photo/providers/main_provider.dart';
+import 'package:search_photo/screens/base_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

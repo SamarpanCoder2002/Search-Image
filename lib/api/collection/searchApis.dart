@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:searchphoto/api/constant.dart';
-import 'package:searchphoto/config/key_collection.dart';
+import 'package:search_photo/api/constant.dart';
+import 'package:search_photo/config/key_collection.dart';
 
 class SearchApis {
   static onImageSearch(String query,

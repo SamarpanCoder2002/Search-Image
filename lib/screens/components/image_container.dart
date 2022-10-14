@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' as scheduler;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
-import 'package:searchphoto/config/color_collection.dart';
-import 'package:searchphoto/config/text_style_collection.dart';
-import 'package:searchphoto/providers/main_provider.dart';
-import 'package:searchphoto/screens/show_image.dart';
+import 'package:search_photo/config/color_collection.dart';
+import 'package:search_photo/config/text_style_collection.dart';
+import 'package:search_photo/providers/main_provider.dart';
+import 'package:search_photo/screens/show_image.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../services/device_specific_operation.dart';

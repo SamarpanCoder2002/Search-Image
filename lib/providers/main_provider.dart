@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:searchphoto/api/collection/searchApis.dart';
+import 'package:search_photo/api/collection/searchApis.dart';
 
 class MainProvider extends ChangeNotifier {
   bool _isShimmerLoading = false, _atBottom = false;
@@ -101,14 +101,14 @@ class MainProvider extends ChangeNotifier {
   void listener() {
     if (!_atBottom &&
         _scrollController.position.pixels.toInt() >=
-            (_scrollController.position.maxScrollExtent.toInt()) - 150) {
+            (_scrollController.position.maxScrollExtent.toInt()) - 200) {
       updateAtBottomStatus(true);
       onSearch(considerCurrSearchQuery: true);
     }
 
     if (_atBottom &&
         _scrollController.position.pixels.toInt() <
-            (_scrollController.position.maxScrollExtent.toInt()) - 150) {
+            (_scrollController.position.maxScrollExtent.toInt()) - 200) {
       updateAtBottomStatus(false);
     }
   }

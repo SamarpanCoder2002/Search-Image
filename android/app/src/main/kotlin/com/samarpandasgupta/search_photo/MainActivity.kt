@@ -1,4 +1,4 @@
-package com.example.searchphoto
+package com.samarpandasgupta.search_photo
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:searchphoto/config/color_collection.dart';
-import 'package:searchphoto/services/device_specific_operation.dart';
+import 'package:search_photo/config/color_collection.dart';
+import 'package:search_photo/services/device_specific_operation.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ShowImageScreen extends StatefulWidget {
@@ -14,7 +14,6 @@ class ShowImageScreen extends StatefulWidget {
 }
 
 class _ShowImageScreenState extends State<ShowImageScreen> {
-
   @override
   void dispose() {
     hideKeyboard();
