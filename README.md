@@ -1,16 +1,12 @@
-# search_photo
+## <p align="center"> 🎊 Image Search Engine </p>
 
-A new Flutter project.
+### <p align="center"> Search across different topics for free through the app and share easily</p>
 
-## Getting Started
+<p align="center">
+    <img src="./readme_assets/1.png" alt="Search Image Ref 1" width="200">
+    <img src="./readme_assets/2.png" alt="Search Image Ref 1" width="200">
+    <img src="./readme_assets/3.png" alt="Search Image Ref 1" width="200">
+    <img src="./readme_assets/4.png" alt="Search Image Ref 1" width="200">
+</p>
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### <p align="center">Give 🌟 this repo</p>
