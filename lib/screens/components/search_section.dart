@@ -30,15 +30,15 @@ class _SearchSectionState extends State<SearchSection> {
       child: TextFormField(
         cursorColor: AppColors.lightGreyColor,
         controller: Provider.of<MainProvider>(context).searchController,
+        textInputAction: TextInputAction.search,
         onEditingComplete: () {
           hideKeyboard();
           Provider.of<MainProvider>(context, listen: false).onSearch();
         },
         decoration: InputDecoration(
           icon: const Padding(
-            padding: EdgeInsets.only(left: 15),
-              child: Icon(Icons.search_rounded)
-          ),
+              padding: EdgeInsets.only(left: 15),
+              child: Icon(Icons.search_rounded)),
           iconColor: AppColors.lightGreyColor,
           hintText: 'Search something here',
           hintStyle: TextStyleCollection.searchTextStyle
