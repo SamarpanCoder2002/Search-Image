@@ -7,6 +7,8 @@ import 'package:search_photo/screens/components/image_container.dart';
 import 'package:search_photo/screens/components/search_section.dart';
 import 'package:search_photo/services/device_specific_operation.dart';
 
+import '../services/download_management.dart';
+
 class BaseScreen extends StatefulWidget {
   const BaseScreen({Key? key}) : super(key: key);
 
@@ -18,6 +20,7 @@ class _BaseScreenState extends State<BaseScreen> {
   @override
   void initState() {
     changeSystemNavigationAndStatusBarColor();
+    updateApp(context);
     super.initState();
   }
 
