@@ -14,7 +14,7 @@ class SearchApis {
     final _response = await http.get(Uri.parse(url), headers: {
       "Accept": "application/json",
       "Authorization":
-          "Bearer ${dotenv.env[EnvFileKey.pixelsApiKey]}",
+          "${dotenv.env[EnvFileKey.pixelsApiKey]}",
     });
 
     return json.decode(_response.body);
