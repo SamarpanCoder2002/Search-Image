@@ -95,8 +95,22 @@ class _ImageContainerSectionState extends State<ImageContainerSection> {
             borderRadius: BorderRadius.circular(16),
           ),
           child: CachedNetworkImage(
-              imageUrl: _imagesCollection[index]['src']['large'] ??
-                  _imagesCollection[index]['src']['original'])),
+            imageUrl: _imagesCollection[index]['src']['large'] ??
+                _imagesCollection[index]['src']['original'],
+            progressIndicatorBuilder: (_, __, downloadProgress) =>
+                Shimmer.fromColors(
+              baseColor: AppColors.pureBlackColor.withOpacity(0.6),
+              highlightColor: AppColors.pureBlackColor.withOpacity(0.8),
+              child: Container(
+                width: MediaQuery.of(context).size.width / 2,
+                height: 140,
+                decoration: BoxDecoration(
+                  color: AppColors.pureBlackColor.withOpacity(0.05),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+            ),
+          )),
     );
   }
 

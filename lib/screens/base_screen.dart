@@ -44,8 +44,8 @@ class _BaseScreenState extends State<BaseScreen> {
   }
 
   _actualBody() {
-    return Column(
-      children: const [
+    return const Column(
+      children: [
         SizedBox(
           height: 30,
         ),
